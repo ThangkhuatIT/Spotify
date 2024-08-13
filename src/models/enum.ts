@@ -1,21 +1,21 @@
 export enum TokenType {
   CONFIRM_EMAIL,
   RESET_PASSWORD,
-  REFRESH_TOKEN,
+  REFRESH_TOKEN
 }
 export enum Role {
   MEMBER,
   ARTIST,
-  ADMIN,
+  ADMIN
 }
 export enum Gender {
   MALE,
   FEMALE,
-  OTHER,
+  OTHER
 }
 export enum PlaylistStatus {
   PUBLIC,
-  PRIVATE,
+  PRIVATE
 }
 
 export enum Language {
@@ -24,13 +24,13 @@ export enum Language {
   VIETNAMESE,
   ENGLISH,
   CHINESE,
-  KOREAN,
+  KOREAN
 }
- const Enums = {
-  TokenType :TokenType,
-  Language:Language,
-  Role:Role,
-  Gender:Gender,
-  PlaylistStatus:PlaylistStatus,
-};
-export default Enums;
+const Enums = {
+  TokenType: TokenType,
+  Language: Language,
+  Role: Role,
+  Gender: Gender,
+  PlaylistStatus: PlaylistStatus
+}
+export default Enums

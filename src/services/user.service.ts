@@ -1,15 +1,15 @@
-import User, { IUser } from "../models/User";
-import ApiError from "../utils/ApiError";
+import User, { IUser } from '../models/User'
+import ApiError from '../utils/ApiError'
 
 export async function createUser({
   externalId,
   email,
   name,
-  phoneNumber,
+  phoneNumber
 }: {
-  externalId: string,
-  email: string,
-  name: string,
+  externalId: string
+  email: string
+  name: string
   phoneNumber?: string
 }): Promise<IUser> {
   try {
@@ -17,14 +17,13 @@ export async function createUser({
       externalId,
       email,
       name,
-      phoneNumber,
-    });
+      phoneNumber
+    })
 
-    user = await user.save();
-    
-    return user.toObject();
+    user = await user.save()
+
+    return user.toObject()
   } catch (error: any) {
-    throw new ApiError(500, error.message);    
+    throw new ApiError(500, error.message)
   }
 }
-

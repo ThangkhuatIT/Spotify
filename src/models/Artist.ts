@@ -1,19 +1,19 @@
-import { Schema, Types } from "mongoose";
+import { Schema, Types } from 'mongoose'
 
-export interface IAtist{
-    _id:Types.ObjectId,
-    createdAt: Date,
-    updatedAt: Date,
-    name:String,
-    birthDate?:Date,
-    about?:string,
-    imageUrl?:string,
-    imageId?:string,
-    followerCount:number,
-    alias?:string,
-    email: string,
-    phoneNumber?: string,
-    emailConfirmed:boolean,
+export interface IAtist {
+  _id: Types.ObjectId
+  createdAt: Date
+  updatedAt: Date
+  name: String
+  birthDate?: Date
+  about?: string
+  imageUrl?: string
+  imageId?: string
+  followerCount: number
+  alias?: string
+  email: string
+  phoneNumber?: string
+  emailConfirmed: boolean
 }
 
 // const userSchema = new Schema<IAtist>(

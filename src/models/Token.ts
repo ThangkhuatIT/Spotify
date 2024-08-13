@@ -1,29 +1,29 @@
-import { model, Schema, Types } from "mongoose";
+import { model, Schema, Types } from 'mongoose'
 
 export interface IToken {
-  _id: Types.ObjectId;
-  token: string;
-  expirytime: Date;
-  type: string;
-  userId: Types.ObjectId;
+  _id: Types.ObjectId
+  token: string
+  expirytime: Date
+  type: string
+  userId: Types.ObjectId
 }
 const tokenSchema = new Schema<IToken>({
   token: {
     type: String,
-    required: true,
+    required: true
   },
   type: {
     type: String,
-    enum: ["CONFIRM_EMAIL", "RESET_PASSWORD", "REFRESH_TOKEN"],
+    enum: ['CONFIRM_EMAIL', 'RESET_PASSWORD', 'REFRESH_TOKEN']
   },
   expirytime: {
-    type: Date,
+    type: Date
   },
   userId: {
     type: Schema.Types.ObjectId,
-    ref: "User",
-    required: true,
-  },
-});
-const Token = model("Token", tokenSchema);
-export default Token;
+    ref: 'User',
+    required: true
+  }
+})
+const Token = model('Token', tokenSchema)
+export default Token

@@ -1,16 +1,15 @@
-
-import bodyParser from "body-parser";
-import Config from "./config";
-import connectDB from "./config/database";
-import errorHandlingMiddleware from "./middlewares/error-handler.middleware";
-import express, { Express } from "express";
-import route from "./routes/";
-import { checkValidationResult } from "./middlewares/validations.middleware";
-const app: Express = express();
+import bodyParser from 'body-parser'
+import Config from './config'
+import connectDB from './config/database'
+import errorHandlingMiddleware from './middlewares/error-handler.middleware'
+import express, { Express } from 'express'
+import route from './routes/'
+import { checkValidationResult } from './middlewares/validations.middleware'
+const app: Express = express()
 
 // Connect to MongoDB
-const mongoURI = Config.MONGO_URI;
-connectDB(mongoURI);
+const mongoURI = Config.MONGO_URI
+connectDB(mongoURI)
 
 // Tạo Redis client
 // const client = redis.createClient({
@@ -30,15 +29,15 @@ connectDB(mongoURI);
 //   .catch(err => {
 //     console.error('Error connecting to Redis', err);
 //   });
-const port = Config.PORT || 3002;
+const port = Config.PORT || 3002
 // Express configuration
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(route);
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(route)
 
 // app.use(checkValidationResult);
-app.use(errorHandlingMiddleware);
+app.use(errorHandlingMiddleware)
 
 app.listen(port, () => {
-  console.log(` Spotify is running on port ${port}`);
-});
+  console.log(` Spotify is running on port ${port}`)
+})

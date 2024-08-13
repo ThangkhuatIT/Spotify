@@ -1,12 +1,12 @@
-import { NextFunction } from "express";
+import { NextFunction } from 'express'
 
 const wrapCallbacksInTryCatch = (func: any) => {
   return async (req: any, res: any, next: NextFunction) => {
     try {
-      await func(req, res, next);
+      await func(req, res, next)
     } catch (error) {
-      next(error);
+      next(error)
     }
-  };
-};
-export default wrapCallbacksInTryCatch;
+  }
+}
+export default wrapCallbacksInTryCatch

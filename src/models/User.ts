@@ -1,19 +1,19 @@
-import { Date, model, Schema, Types } from "mongoose";
+import { Date, model, Schema, Types } from 'mongoose'
 export interface IUser {
-  _id: Types.ObjectId;
-  name: string;
-  email: string;
-  passWord:string;
-  createdAt: Date;
-  updatedAt: Date;
-  emailConfirmed: boolean;
-  locked: boolean;
-  role: string;
-  followerCount: number;
-  birtDate?: Date;
-  gender?: string;
-  about?: string;
-  alias?: string;
+  _id: Types.ObjectId
+  name: string
+  email: string
+  passWord: string
+  createdAt: Date
+  updatedAt: Date
+  emailConfirmed: boolean
+  locked: boolean
+  role: string
+  followerCount: number
+  birtDate?: Date
+  gender?: string
+  about?: string
+  alias?: string
 }
 
 const userSchema = new Schema<IUser>(
@@ -23,59 +23,59 @@ const userSchema = new Schema<IUser>(
     email: {
       type: String,
       required: true,
-      unique: true,
+      unique: true
     },
-    passWord:{
-      type:String,
-      required:true
+    passWord: {
+      type: String,
+      required: true
     },
     name: {
       type: String,
-      required: true,
+      required: true
     },
     emailConfirmed: {
       type: Boolean,
-      default: false,
+      default: false
     },
     locked: {
       type: Boolean,
-      default: false,
+      default: false
     },
     role: {
-      type:String,
-      enum: ["MEMBER", " ARTIST", "ADMIN"],
-      default: "MEMBER",
+      type: String,
+      enum: ['MEMBER', ' ARTIST', 'ADMIN'],
+      default: 'MEMBER'
     },
     followerCount: {
       type: Number,
-      default: 0,
+      default: 0
     },
     birtDate: {
       type: Date,
-      default: null,
+      default: null
     },
     gender: {
-      type:String,
-      enum: ["MALE", " FEMALE", "OTHER"],
-      default: "MEMBER",
+      type: String,
+      enum: ['MALE', ' FEMALE', 'OTHER'],
+      default: 'MEMBER'
     },
     about: {
-      type: String,
+      type: String
     },
     alias: {
-      type: String,
-    },
+      type: String
+    }
   },
   {
     timestamps: true,
     toObject: {
       transform(doc, ret, options) {
-        delete ret.__v;
-      },
-    },
+        delete ret.__v
+      }
+    }
   }
-);
+)
 
-const User = model("User", userSchema);
+const User = model('User', userSchema)
 
-export default User;
+export default User
