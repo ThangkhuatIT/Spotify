@@ -9,19 +9,16 @@ import Token from '../models/Token'
 import User, { IUser } from '../models/User'
 import { loginDto, registerDto } from '~/dtos/auth.dtos'
 export async function register(payload: registerDto): Promise<IUser> {
-  const { email, name, birtDate, gender, passWord } = payload
+  const { email, name, password } = payload
   const user = await User.findOne({ email })
-  if (user) {
-    throw new ApiError(400, 'user already exists')
-  }
-  try {
-    const passwordHash = await bcrypt.hash(passWord, 10)
+    if (user) {
+      throw new ApiError(400, 'user already exists')
+    }
+    const passwordHash = await bcrypt.hash(password, 10)
     const newUser = new User({
       name: name,
       email: email,
-      passWord: passwordHash,
-      gender: gender,
-      birtDate: birtDate
+      password: passwordHash,
     })
     await newUser.save()
     const newConfirmEmailToken = generateRandomString()
@@ -36,13 +33,9 @@ export async function register(payload: registerDto): Promise<IUser> {
       userId
     })
     return newUser
-  } catch (error: any) {
-    throw new ApiError(500, error.message)
-  }
 }
 
 export async function login(payload: loginDto): Promise<{
-  user: IUser
   accessToken: string
   refreshToken: string
 }> {
@@ -51,7 +44,7 @@ export async function login(payload: loginDto): Promise<{
   if (!user) {
     throw new ApiError(401, 'Invalid credentials')
   }
-  const isMatchPassword = await bcrypt.compare(passWord, user.passWord)
+  const isMatchPassword = await bcrypt.compare(passWord, user.password)
   if (!isMatchPassword) {
     throw new ApiError(401, 'Invalid credentials')
   }
@@ -63,7 +56,6 @@ export async function login(payload: loginDto): Promise<{
     signJwt({ user: user }, Config.REFRESH_TOKEN_EXPIRATION)
   ])
   return {
-    user: user,
     accessToken: accessToken as string,
     refreshToken: refreshToken as string
   }

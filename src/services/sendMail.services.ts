@@ -19,7 +19,8 @@ export async function sendConfirmMail({
       pass: Config.PASSWORDEMAIL
     }
   })
-  const verificationUrl = `${Config.URL_APP}/verify-email?token=${token}&userId=${userId}`
+  const verificationUrl = `${Config.FRONT_END_URL}/auth/verify-email?token=${token}&userId=${userId}`
+
   await transporter.sendMail({
     from: `"Spotify from thangdzkhongaiyeu" <${process.env.EMAIL_FROM}>`,
     to: email,
@@ -41,7 +42,7 @@ export async function sendResetPassMail(token: string, email: string, id: Types.
       pass: Config.PASSWORDEMAIL
     }
   })
-  const verificationUrl = `${Config.URL_APP}/reset_passWord?token=${token}`
+  const verificationUrl = `${Config.FRONT_END_URL}/reset_passWord?token=${token}`
   await transporter.sendMail({
     from: `"Spotify from thangdzkhongaiyeu" <${process.env.EMAIL_FROM}>`,
     to: email,

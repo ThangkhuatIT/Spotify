@@ -1,5 +1,4 @@
 import { model, Schema, Types } from 'mongoose'
-import Enums from './enum'
 
 export interface ISong {
   _id: Types.ObjectId
@@ -15,7 +14,8 @@ export interface ISong {
   listenCount: number
   alias?: string
   language: string
-  artists: Types.ObjectId[]
+  artist: string
+  genre: string
 }
 const songSchema = new Schema<ISong>(
   {
@@ -28,9 +28,9 @@ const songSchema = new Schema<ISong>(
     alias: {
       type: String
     },
-    artists: [
+    artist: [
       {
-        type: Schema.Types.ObjectId,
+        type: String,
         ref: 'User',
         required: true
       }
@@ -51,10 +51,6 @@ const songSchema = new Schema<ISong>(
       type: Number,
       default: 0
     },
-    listenCount: {
-      type: Number,
-      default: 0
-    },
     language: {
       type: String,
       enum: ['NONE', 'JAPANESE', 'VIETNAMESE', 'ENGLISH', 'CHINESE', 'KOREAN'],
@@ -63,6 +59,11 @@ const songSchema = new Schema<ISong>(
     length: {
       type: Number,
       default: 0
+    },
+    genre: {
+      type: String,
+      ref:'Genre',
+      required: true
     }
   },
   {
@@ -70,11 +71,12 @@ const songSchema = new Schema<ISong>(
     toObject: {
       transform(doc, ret, options) {
         delete ret.__v
+        delete ret.__id
       }
     }
   }
 )
 
-const Song = model('Song', songSchema)
-
+const Song = model('Song', songSchema)   
 export default Song
+   

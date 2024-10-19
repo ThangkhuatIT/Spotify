@@ -1,9 +1,7 @@
 export type registerDto = {
-  birtDate: Date
   name: string
-  gender: string
   email: string
-  passWord: string
+  password: string
 }
 export type loginDto = {
   email: string

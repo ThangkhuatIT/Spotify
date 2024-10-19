@@ -3,7 +3,7 @@ export interface IUser {
   _id: Types.ObjectId
   name: string
   email: string
-  passWord: string
+  password: string
   createdAt: Date
   updatedAt: Date
   emailConfirmed: boolean
@@ -25,7 +25,7 @@ const userSchema = new Schema<IUser>(
       required: true,
       unique: true
     },
-    passWord: {
+    password: {
       type: String,
       required: true
     },
@@ -56,8 +56,8 @@ const userSchema = new Schema<IUser>(
     },
     gender: {
       type: String,
-      enum: ['MALE', ' FEMALE', 'OTHER'],
-      default: 'MEMBER'
+      enum: ['MALE', ' FEMALE', 'OTHER',''],
+      default: ''
     },
     about: {
       type: String

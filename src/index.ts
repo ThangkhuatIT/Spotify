@@ -1,11 +1,15 @@
-import bodyParser from 'body-parser'
 import Config from './config'
 import connectDB from './config/database'
 import errorHandlingMiddleware from './middlewares/error-handler.middleware'
-import express, { Express } from 'express'
+import express, { Express, json } from 'express'
 import route from './routes/'
-import { checkValidationResult } from './middlewares/validations.middleware'
+import cors from "cors";
+
 const app: Express = express()
+
+app.use(cors({
+  origin: "*"
+}))
 
 // Connect to MongoDB
 const mongoURI = Config.MONGO_URI
@@ -31,11 +35,9 @@ connectDB(mongoURI)
 //   });
 const port = Config.PORT || 3002
 // Express configuration
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(express.json())
+app.use(express.urlencoded({ extended: false }))
 app.use(route)
-
-// app.use(checkValidationResult);
 app.use(errorHandlingMiddleware)
 
 app.listen(port, () => {

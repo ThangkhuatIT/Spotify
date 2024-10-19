@@ -1,11 +1,8 @@
-// import { Router } from "express";
-// import * as userController from "../controllers/users.controller";
-// import wrapCallbacksInTryCatch from "../utils/wrapCallbacksInTryCatch";
+import { Router } from "express";
+import * as userController from "../controllers/users.controller";
+import * as songController from "../controllers/song.controller";
+import songRoute from "./song.route";
 
-// const userRoute = Router();
-// userRoute.post(
-//     "/",
-//     wrapCallbacksInTryCatch(userController.handleCreateUser)
-// );
-
-// export default userRoute;
+const userRoute = Router();
+userRoute.use('/song',songRoute)
+export default userRoute;

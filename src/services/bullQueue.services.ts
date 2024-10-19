@@ -1,9 +1,8 @@
 import Queue from 'bull'
-import Config from '../config'
-import { sendConfirmMail } from './sendMail.service'
+import { sendConfirmMail } from './sendMail.services'
 export const sendEmailQueue = new Queue(
   'sendEmail',
-  `redis://default:RQAwhM21ZA9FuXIC9xdndms4dEuLrzbu@redis-13953.c1.ap-southeast-1-1.ec2.redns.redis-cloud.com:13953`,
+  `redis://default:6yqmn0jqWfmNNcVg94lnS3c8VUbLy1tX@redis-14804.c292.ap-southeast-1-1.ec2.redns.redis-cloud.com:14804`,
   {
     redis: { maxRetriesPerRequest: null, enableReadyCheck: false }
   }
