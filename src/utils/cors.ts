@@ -1,6 +1,6 @@
 import ApiError from "./ApiError"
 
-const WHITELIST_DOMAINS = ['http://localhost:517323333']
+const WHITELIST_DOMAINS = ['http://localhost:5173']
 // Cấu hình CORS Option trong dự án thực tế (Video số 62 trong chuỗi MERN Stack Pro)
 export const corsOptions = {
   origin: function (origin :any, callback:any) {
@@ -13,7 +13,6 @@ export const corsOptions = {
 
     // Kiểm tra dem origin có phải là domain được chấp nhận hay không
     if (WHITELIST_DOMAINS.includes(origin)) {
-      console.log('hihii')
       return callback(null, true)
     }
 

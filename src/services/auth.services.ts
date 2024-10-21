@@ -38,6 +38,10 @@ export async function register(payload: registerDto): Promise<IUser> {
 export async function login(payload: loginDto): Promise<{
   accessToken: string
   refreshToken: string
+  user :{
+    name:string,
+    email:string,
+  }
 }> {
   const { email, passWord } = payload
   const user = await User.findOne({ email })
@@ -57,7 +61,11 @@ export async function login(payload: loginDto): Promise<{
   ])
   return {
     accessToken: accessToken as string,
-    refreshToken: refreshToken as string
+    refreshToken: refreshToken as string,
+    user:{
+      name:user.name,
+      email:user.email
+    }
   }
 }
 export async function verifyEmail(token: string, id: string) {

@@ -15,10 +15,7 @@ export async function register(req: Request, res: Response) {
 export async function login(req: Request, res: Response) {
   const { email, passWord } = req.body
   const data = await authService.login({ email, passWord })
-  return res.status(200).json({
-    accessToken: data.accessToken,
-    refreshToken: data.refreshToken
-  })
+  return res.status(200).json(data)
 }
 export async function verifyEmail(req: Request, res: Response) {
   const { token, id } = req.query
