@@ -4,12 +4,11 @@ import errorHandlingMiddleware from './middlewares/error-handler.middleware'
 import express, { Express, json } from 'express'
 import route from './routes/'
 import cors from "cors";
+import { corsOptions } from './utils/cors'
 
 const app: Express = express()
 
-app.use(cors({
-  origin: "*"
-}))
+app.use(cors(corsOptions))
 
 // Connect to MongoDB
 const mongoURI = Config.MONGO_URI
