@@ -1,7 +1,8 @@
 import { Types } from 'mongoose'
 import Token, { IToken } from '../models/Token'
-import { TokenType } from '../models/enum'
 import ApiError from '../utils/ApiError'
+import { signJwt, verifyJwt } from '~/utils/jwt'
+import Config from '~/config'
 
 export async function saveConfirmEmailToken({
   userId,
@@ -25,6 +26,17 @@ export async function saveConfirmEmailToken({
     throw new ApiError(500, error.message)
   }
 }
-export async function deleteToken(token: string, userId: Types.ObjectId) {
-  await Token.deleteOne({ userId, token })
+export async function saveRefreshToken({ userId, token }: { userId: Types.ObjectId; token: string }): Promise<IToken> {
+  try {
+    const newToken = new Token({
+      userId: userId,
+      token: token,
+      type: 'REFRESH_TOKEN'
+    })
+    newToken.save()
+    return newToken
+  } catch (error: any) {
+    throw new ApiError(500, error.message)
+  }
 }
+

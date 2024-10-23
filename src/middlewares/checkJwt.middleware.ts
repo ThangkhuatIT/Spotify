@@ -6,16 +6,18 @@ export async function checkJwt(req: Request, res: Response, next: NextFunction) 
   const token = decodeTokenFromRequest(req)
   if (!token) {
     return res.status(401).send({
-      message: 'Unauthorized'
+       error: "Unauthorized",
+       message: "no tokens"
     })
   }
   try {
-    const payload = await verifyJwt(token)
-    req.body.user = payload
+    const payload = await verifyJwt(token) as any
+    req.body.user = payload.user
     next()
   } catch (error) {
     return res.status(401).send({
-      message: 'Unauthorized!'
+       error: "Unauthorized",
+       message: "Token expired"
     })
   }
 }
