@@ -8,6 +8,7 @@ import Config from '../config'
 import Token from '../models/Token'
 import User, { IUser } from '../models/User'
 import { loginDto, registerDto } from '~/dtos/auth.dtos'
+import { Types } from 'mongoose'
 export async function register(payload: registerDto): Promise<IUser> {
   const { email, name, password } = payload
   const user = await User.findOne({ email })
@@ -41,6 +42,7 @@ export async function login(payload: loginDto): Promise<{
   user: {
     name: string
     email: string
+    id:Types.ObjectId
   }
 }> {
   const { email, passWord } = payload
@@ -68,7 +70,8 @@ export async function login(payload: loginDto): Promise<{
     refreshToken: refreshToken as string,
     user: {
       name: user.name,
-      email: user.email
+      email: user.email,
+      id:user._id
     }
   }
 }
