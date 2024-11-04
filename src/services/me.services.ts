@@ -6,5 +6,6 @@ export async function getProfile(id: string): Promise<IUser> {
   if (!user) {
     throw new ApiError(404, 'user not exits')
   }
+  user.password = '';
   return user
 }

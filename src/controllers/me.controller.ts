@@ -6,6 +6,7 @@ export async function handleUpdateUserProfile(req: Request, res: Response) {
 export async function getProfile(req: Request, res: Response) {
   const user = req.body.user
   const account = await meServices.getProfile(user._id)
+
   res.status(200).json(account)
 }
 

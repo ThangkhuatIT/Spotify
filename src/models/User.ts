@@ -72,7 +72,8 @@ const userSchema = new Schema<IUser>(
       transform(doc, ret, options) {
         delete ret.__v
       }
-    }
+    },
+    versionKey:false
   }
 )
 
