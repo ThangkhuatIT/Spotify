@@ -16,7 +16,7 @@ const storage = new CloudinaryStorage({
     folder: 'thangdeptrai'
   } as Options
 })
- const upload = multer({
+const upload = multer({
   storage: storage,
   limits: { fileSize: 50 * 1024 * 1024 }, // Giới hạn kích thước file là 50MB
   fileFilter: function (req, file, cb) {
@@ -36,7 +36,7 @@ export const uploadSong = upload.fields([
   { name: 'imageUrl', maxCount: 1 },
   { name: 'songUrl', maxCount: 1 }
 ])
-export const uploadImage = upload.single('imageUrl')
+export const uploadImage = upload.single('file')
 
 export const deleteFile = (...files: string[]) => {
   files.forEach((file) => {
@@ -49,4 +49,3 @@ export const deleteFile = (...files: string[]) => {
     })
   })
 }
-

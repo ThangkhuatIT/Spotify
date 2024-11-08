@@ -1,9 +1,8 @@
-import { Gender } from "~/models/enum"
-
 export type updateProfileDto = {
-  email?: string
-  password?: string
   name?: string
-  birtDate?: Date
-  gender?:Gender
+  birthDate?: Date
+  gender?:string
+  about?:string
+  image?:string
+  imageId?:string
 }

@@ -10,7 +10,7 @@
     "baseUrl": ".", // Đường dẫn base cho các import
     "paths": {
       "~/*": ["src/*"] // Đường dẫn tương đối cho các import (alias)
-    }
+    },
   },
   "types": ["node", "multer", "mongoose"],
   "ts-node": {

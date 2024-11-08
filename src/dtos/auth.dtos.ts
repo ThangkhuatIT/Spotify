@@ -7,3 +7,7 @@ export type loginDto = {
   email: string
   passWord: string
 }
+export type resetPassDto = {
+  password: string
+  newPassword: string
+}

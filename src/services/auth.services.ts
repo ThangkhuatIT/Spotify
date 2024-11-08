@@ -7,7 +7,7 @@ import bcrypt from 'bcrypt'
 import Config from '../config'
 import Token from '../models/Token'
 import User, { IUser } from '../models/User'
-import { loginDto, registerDto } from '~/dtos/auth.dtos'
+import { loginDto, registerDto, resetPassDto } from '~/dtos/auth.dtos'
 import { Types } from 'mongoose'
 export async function register(payload: registerDto): Promise<IUser> {
   const { email, name, password } = payload
@@ -42,7 +42,7 @@ export async function login(payload: loginDto): Promise<{
   user: {
     name: string
     email: string
-    id:Types.ObjectId
+    id: Types.ObjectId
   }
 }> {
   const { email, passWord } = payload
@@ -57,9 +57,14 @@ export async function login(payload: loginDto): Promise<{
   if (user.locked) {
     throw new ApiError(403, 'You are locked out!')
   }
+  const data = {
+    name: user.name,
+    email: user.email,
+    id: user._id
+  }
   const [accessToken, refreshToken] = await Promise.all([
-    signJwt({ user: user }, Config.ACCESS_TOKEN_EXPIRATION),
-    signJwt({ user: user }, Config.REFRESH_TOKEN_EXPIRATION)
+    signJwt(data, Config.ACCESS_TOKEN_EXPIRATION),
+    signJwt(data, Config.REFRESH_TOKEN_EXPIRATION)
   ])
   await tokenSevices.saveRefreshToken({
     userId: user._id,
@@ -71,7 +76,7 @@ export async function login(payload: loginDto): Promise<{
     user: {
       name: user.name,
       email: user.email,
-      id:user._id
+      id: user._id
     }
   }
 }
@@ -97,13 +102,25 @@ export async function refreshToken(token: string) {
   const data = Token.findOne({ token: token })
   if (!data) throw new ApiError(404, 'token not exits')
   try {
-    const payload = await verifyJwt(token) as any
+    const payload = (await verifyJwt(token)) as any
     if (payload) {
-      const accessToken = await signJwt({user:payload.user}, Config.ACCESS_TOKEN_EXPIRATION)
+      const { id, name, email } = payload
+      const accessToken = await signJwt({ id, name, email }, Config.ACCESS_TOKEN_EXPIRATION)
       return accessToken
     }
   } catch (error: any) {
     await Token.deleteOne({ token: token })
     throw new ApiError(403, error.message)
   }
+}
+export async function resetPass(id: string, payload: resetPassDto) {
+  const user = await User.findOne({ _id: id })
+  if (!user) throw new ApiError(401, 'Invalid credentials')
+  const isMatchPassword = await bcrypt.compare(payload.password, user.password)
+  if (!isMatchPassword) {
+    throw new ApiError(401, 'Invalid credentials')
+  }
+  user.password = payload.newPassword
+  user.save()
+  return true
 }

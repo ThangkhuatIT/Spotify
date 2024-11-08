@@ -11,6 +11,8 @@ export default function errorHandlingMiddleware(err: ApiError, req: Request, res
     return res.status(responseError.statusCode).json(responseError)
   }
 
+  console.log(err);
+  
   return res.status(500).json({
     message: 'Something went wrong!'
   })

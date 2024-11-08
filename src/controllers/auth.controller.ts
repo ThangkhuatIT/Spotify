@@ -28,7 +28,13 @@ export async function verifyEmail(req: Request, res: Response) {
   return res.status(200).json('ok')
 }
 export async function refreshToken(req: Request, res: Response) {
-  const {refreshToken} = req.body
+  const { refreshToken } = req.body
   const data = await authService.refreshToken(refreshToken)
-  return res.status(200).json({accessToken:data})
+  return res.status(200).json({ accessToken: data })
+}
+export async function resetPass(req: Request, res: Response) {
+  const { user } = req
+  const { password, newPassword } = req.body
+  const result = await authService.resetPass(user.id, { password, newPassword })
+  return res.status(200).json(result)
 }

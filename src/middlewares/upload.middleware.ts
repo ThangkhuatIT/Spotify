@@ -34,7 +34,7 @@ export function middlewareUploadSong(req: Request, res: Response, next: NextFunc
 export function middlewareUploadImage(req: Request, res: Response, next: NextFunction) {
   uploadImage(req, res, function (err) {
     if (!req.file) {
-      return res.status(400).send('No files uploaded.')
+      next()
     }
     if (err instanceof multer.MulterError) {
       if (err.code === 'LIMIT_FILE_SIZE') {
@@ -42,10 +42,10 @@ export function middlewareUploadImage(req: Request, res: Response, next: NextFun
       }
       return res.status(500).send('Lỗi upload file.')
     } else if (err) {
-      console.log(err)
       return res.status(500).send('Có lỗi xảy ra khi upload file.')
     }
-    console.log(req.file)
+    req.body.image = req.file?.path
+    req.body.imageId = req.file?.filename
     next()
   })
 }

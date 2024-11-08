@@ -1,8 +1,10 @@
-import { Date, model, Schema, Types } from 'mongoose'
+import {model, Schema, Types } from 'mongoose'
 export interface IUser {
   _id: Types.ObjectId
   name: string
   email: string
+  image: string
+  imageId:string
   password: string
   createdAt: Date
   updatedAt: Date
@@ -10,7 +12,7 @@ export interface IUser {
   locked: boolean
   role: string
   followerCount: number
-  birtDate?: Date
+  birthDate?: Date
   gender?: string
   about?: string
   alias?: string
@@ -50,20 +52,30 @@ const userSchema = new Schema<IUser>(
       type: Number,
       default: 0
     },
-    birtDate: {
+    birthDate: {
       type: Date,
       default: null
     },
     gender: {
       type: String,
-      enum: ['MALE', ' FEMALE', 'OTHER',''],
+      enum: ['MALE', 'FEMALE', 'OTHER',''],
       default: ''
     },
     about: {
-      type: String
+      type: String,
+      default:''
     },
     alias: {
-      type: String
+      type: String,
+      default:''
+    },
+    image: {
+      type: String,
+      default:''
+    },
+    imageId: {
+      type: String,
+      default:''
     }
   },
   {
