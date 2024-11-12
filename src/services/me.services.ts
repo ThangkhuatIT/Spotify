@@ -16,10 +16,10 @@ export async function updateProfile(id: Types.ObjectId, payload: updateProfileDt
   if (!user) throw new ApiError(401, 'Invalid credentials')
   payload.about && (user.about = payload.about)
   payload.name && (user.name = payload.name)
-  payload.birthDate && (user.birthDate = payload.birthDate)
+  // payload.birthDate && (user.birthDate = payload.birthDate)
   payload.gender && (user.gender = payload.gender)
   payload.image && (user.image = payload.image)
   payload.imageId && (user.imageId = payload.imageId)
-  user.save()
-  return user
+  const newUser = await user.save()
+  return newUser
 }

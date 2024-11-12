@@ -23,7 +23,6 @@ export function middlewareUploadSong(req: Request, res: Response, next: NextFunc
     if (!files.imageUrl) {
       return res.status(400).send('Imange not uploaded yet.')
     }
-    console.log(files.songUrl[0])
     req.body.songUrl = files.songUrl[0].path
     req.body.imageUrl = files.imageUrl[0].path
     req.body.imageUrlId = files.imageUrl[0].filename
@@ -34,7 +33,7 @@ export function middlewareUploadSong(req: Request, res: Response, next: NextFunc
 export function middlewareUploadImage(req: Request, res: Response, next: NextFunction) {
   uploadImage(req, res, function (err) {
     if (!req.file) {
-      next()
+      return next()
     }
     if (err instanceof multer.MulterError) {
       if (err.code === 'LIMIT_FILE_SIZE') {
